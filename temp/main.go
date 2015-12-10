@@ -3,14 +3,14 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math/rand"
+	"time"
 )
 
 // ParentList gives an []int each item of which gives the index of its parent node.
 func ParentList(order int) []int {
 	var p []int
-	for i:=0;i<order;i++{
+	for i := 0; i < order; i++ {
 		p = append(p, rand.Intn(1+i))
 	}
 	return p
@@ -18,30 +18,30 @@ func ParentList(order int) []int {
 
 type Node struct {
 	Label, ParentLabel int
-	HasChild bool
+	HasChild           bool
 }
 
 func (n *Node) String() string {
-	return	fmt.Sprintf("Index: %v\nParent Index: %v\nHas Child? %v",n.Label, n.ParentLabel, n.HasChild)
+	return fmt.Sprintf("Index: %v\nParent Index: %v\nHas Child? %v", n.Label, n.ParentLabel, n.HasChild)
 }
 
 func makeTree(p []int) map[int]*Node {
 	m := make(map[int]*Node)
-	for i := len(p)-1; (0 < i) && m[i] == nil; i-- {
-		m[i] = &Node{i,p[i],false}
+	for i := len(p) - 1; (0 < i) && m[i] == nil; i-- {
+		m[i] = &Node{i, p[i], false}
 		for x := p[i]; (0 < x) && m[x] == nil; x = p[x] {
-			m[x] = &Node{x,p[x],true}
+			m[x] = &Node{x, p[x], true}
 		}
 	}
-	m[0] = &Node{0,0,true}
+	m[0] = &Node{0, 0, true}
 	return m
 }
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	for i := 0; i<2; i++ {
-		p := ParentList(1+rand.Intn(25))
-		for k,v:= range makeTree(p) {
+	for i := 0; i < 2; i++ {
+		p := ParentList(1 + rand.Intn(25))
+		for k, v := range makeTree(p) {
 			fmt.Println(k)
 			fmt.Println(v)
 			fmt.Println()
