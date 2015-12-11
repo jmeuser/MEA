@@ -2,14 +2,14 @@
 package cost
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"encoding/json"
 )
 
 // Employee has a unique ID, their Manager's ID, and a Pos(ition) in their Dep(artment).
 type Employee struct {
-	ID, MID int
+	ID, MID  int
 	Pos, Dep string
 }
 
@@ -38,8 +38,10 @@ func LoadBPF(fileName string) error {
 // MEA calculates an *Employee e's Monthly Expense Allocation.
 func (e *Employee) MEA() (int, error) {
 	switch e.Pos {
-	case "Developer": return 1000, nil
-	case "QA Tester": return 500, nil
+	case "Developer":
+		return 1000, nil
+	case "QA Tester":
+		return 500, nil
 	case "Manager":
 		s := 300
 		for _, id := range byMID[e.ID] {
