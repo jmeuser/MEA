@@ -22,15 +22,18 @@ type Node struct {
 }
 
 func (n *Node) String() string {
-	return fmt.Sprintf("Index: %v\nParent Index: %v\nHas Child? %v", n.Label, n.ParentLabel, n.HasChild)
+	return fmt.Sprintf("Label: %v\nParent Label: %v\nHas Child? %v", n.Label, n.ParentLabel, n.HasChild)
 }
 
+// makeTree takes a []int p, each of whose entries is less than its index, and returns a map that takes an index to its corresponding tree Node under the assumption that p[i] is the index of node i's parent.
 func makeTree(p []int) map[int]*Node {
 	m := make(map[int]*Node)
-	for i := len(p) - 1; (0 < i) && m[i] == nil; i-- {
-		m[i] = &Node{i, p[i], false}
-		for x := p[i]; (0 < x) && m[x] == nil; x = p[x] {
-			m[x] = &Node{x, p[x], true}
+	for i := len(p) - 1; 0 < i; i-- {
+		if m[i] == nil {
+			m[i] = &Node{i, p[i], false}
+			for x := p[i]; (0 < x) && m[x] == nil; x = p[x] {
+				m[x] = &Node{x, p[x], true}
+			}
 		}
 	}
 	m[0] = &Node{0, 0, true}
@@ -39,8 +42,9 @@ func makeTree(p []int) map[int]*Node {
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	for i := 0; i < 2; i++ {
-		p := ParentList(1 + rand.Intn(25))
+	for i := 0; i < 5; i++ {
+		p := ParentList(1 + rand.Intn(10))
+		fmt.Println(p)
 		for k, v := range makeTree(p) {
 			fmt.Println(k)
 			fmt.Println(v)
