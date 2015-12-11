@@ -13,9 +13,9 @@ type Employee struct {
 	Pos, Dep string
 }
 
-var byID map[int]*Employee
-var byMID map[int][]int
-var byDep map[string][]int
+var byID = make(map[int]*Employee)
+var byMID = make(map[int][]int)
+var byDep = make(map[string][]int)
 
 // LoadBPF unmarshals Basic Personel Files, from fileName.json, into byID, byMID, and byDep.
 func LoadBPF(fileName string) error {
