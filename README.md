@@ -1,5 +1,5 @@
 # MEA
-MEA calculates the Monthly Expense Allocation of a manager or department given the MEA for each employee position in the basic personnel files stored in .json.
+MEA calculates the Monthly Expense Allocation of a manager (MMEA) or department (DMEA) given the MEA for each employee position in the basic personnel files stored in .json.
 
 There are three employee positions:
 * Developers
