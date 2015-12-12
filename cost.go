@@ -49,7 +49,7 @@ func LoadBPF(fileName string) error {
 
 func employeeByID(id string) (*Employee, error) {
 	if byID == nil {
-		return nil, fmt.Errorf("Basic Personal Files have not been laoded: use func LoadBPF")
+		return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
 	}
 	e := byID[id]
 	if e == nil {
@@ -60,7 +60,7 @@ func employeeByID(id string) (*Employee, error) {
 
 func idsByMID(mid string) ([]string, error) {
 	if byMID == nil {
-				return nil, fmt.Errorf("Basic Personal Files have not been laoded: use func LoadBPF")
+				return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
 	}
 	ids := byMID[mid]
 	if ids == nil {
@@ -72,11 +72,11 @@ func idsByMID(mid string) ([]string, error) {
 
 func idsByDep(dep string) ([]string, error) {
 	if byDep == nil {
-			return nil, fmt.Errorf("Basic Personal Files have not been laoded: use func LoadBPF")
+			return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
 	}
 	ids := byDep[dep]
 	if ids == nil {
-		return nil, fmt.Errorf("THere are no employees in the %v department.", dep)
+		return nil, fmt.Errorf("There are no employees in the %v department.", dep)
 	}
 	return ids, nil
 }
