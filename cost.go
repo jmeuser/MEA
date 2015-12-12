@@ -133,7 +133,7 @@ func DMEA(dep string) (int, error) {
 		}
 		x, err := e.mea()
 		if err != nil {
-			return -1, nil
+			return -1, err
 		}
 		s += x
 	}
