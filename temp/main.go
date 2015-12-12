@@ -51,4 +51,14 @@ func main() {
 			fmt.Println()
 		}
 	}
+	m := make(map[string][]string)
+	fmt.Println("m is", m)
+	fmt.Println("Is m nil?", m == nil)
+	var x map[string][]string
+	fmt.Println("x is",x)
+	fmt.Println("Is x nil?", x == nil)
+	y := make(map[string][]string)
+	fmt.Println("y[\"Hello\"] is", y["Hello"])
+	fmt.Println("Is y[\"Hello\"] nil?", y["Hello"] == nil)
+	fmt.Println(make(map[string][]string))
 }
