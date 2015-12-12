@@ -13,9 +13,12 @@ type Employee struct{ ID, MID, Pos, Dep string }
 // mea gives an INDIVIDUAL *Employee's MEA.
 func (e *Employee) mea() (int, error) {
 	switch e.Pos {
-	case "Developer": return 1000, nil
-	case "QA Tester": return 500, nil
-	case "Manager": return 300, nil
+	case "Developer":
+		return 1000, nil
+	case "QA Tester":
+		return 500, nil
+	case "Manager":
+		return 300, nil
 	default:
 		return -1, fmt.Errorf("The MEA for the position %v his unspecified.", e.Pos)
 	}
@@ -60,7 +63,7 @@ func employeeByID(id string) (*Employee, error) {
 
 func idsByMID(mid string) ([]string, error) {
 	if byMID == nil {
-				return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
+		return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
 	}
 	ids := byMID[mid]
 	if ids == nil {
@@ -69,10 +72,9 @@ func idsByMID(mid string) ([]string, error) {
 	return ids, nil
 }
 
-
 func idsByDep(dep string) ([]string, error) {
 	if byDep == nil {
-			return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
+		return nil, fmt.Errorf("Basic Personal Files have not been loaded: use func LoadBPF")
 	}
 	ids := byDep[dep]
 	if ids == nil {
