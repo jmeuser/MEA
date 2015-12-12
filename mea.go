@@ -1,4 +1,4 @@
-// Package cost calculates the Montly Expense Allocation of a manager (MMEA) or department (DMEA) depending on the structure and positions of employees as described in the basic personal files (which are assumed to be stored in .json format, and to have at least those fields which are used in the Employee type).
+// Package cost gives the Monthly Expense Allocation of a Manager (MMEA) or Department (DMEA).
 package cost
 
 import (
@@ -8,16 +8,16 @@ import (
 )
 
 // Employee has a unique ID, their Manager's ID, and a Pos(ition) in their Dep(artment).
-type Employee struct {
-	ID, MID  int
-	Pos, Dep string
-}
+type Employee struct{ ID, MID, Pos, Dep string }
 
-var byID = make(map[int]*Employee)
-var byMID = make(map[int][]int)
-var byDep = make(map[string][]int)
+// byID maps ID to *Employee.
+var byID = make(map[string]*Employee)
 
-// LoadBPF unmarshals Basic Personel Files, from fileName.json, into byID, byMID, and byDep.
+// byMID (byDep) maps MID (Dep) to IDs.
+var byMID = make(map[string][]string)
+var byDep = make(map[string][]string)
+
+// LoadBPF unmarshals Basic Personnel Files, from fileName.json, into byID, byMID, and byDep.
 func LoadBPF(fileName string) error {
 	data, err := ioutil.ReadFile(fileName + ".json")
 	if err != nil {
@@ -35,7 +35,7 @@ func LoadBPF(fileName string) error {
 	return nil
 }
 
-// MEA calculates an *Employee e's Monthly Expense Allocation.
+// MEA calculates an *Employee's Monthly Expense Allocation.
 func (e *Employee) MEA() (int, error) {
 	switch e.Pos {
 	case "Developer":
@@ -43,7 +43,8 @@ func (e *Employee) MEA() (int, error) {
 	case "QA Tester":
 		return 500, nil
 	case "Manager":
-		s := 300
+		s := 300 // Manager's MEA
+		// Add MEA of Manager's Employees.
 		for _, id := range byMID[e.ID] {
 			x, err := byID[id].MEA()
 			if err != nil {
@@ -57,10 +58,11 @@ func (e *Employee) MEA() (int, error) {
 	}
 }
 
-func MMEA(id int) (int, error) {
+// MMEA gives a Manager's Monthly Expense Allocation.
+func MMEA(id string) (int, error) {
 	e := byID[id]
 	if e == nil {
-		return -1, fmt.Errorf("there is not an employee in the Basic Personel Files with ID %d", id)
+		return -1, fmt.Errorf("there is not an employee in the Basic Personell Files with ID %d", id)
 	}
 	if e.Pos != "Manager" {
 		return -1, fmt.Errorf("The employee with ID %d is not a manager.")
@@ -68,6 +70,7 @@ func MMEA(id int) (int, error) {
 	return e.MEA()
 }
 
+// DMEA gives a Department's Monthly Expense Allocation.
 func DMEA(dep string) (int, error) {
 	ids := byDep[dep]
 	if ids == nil {
