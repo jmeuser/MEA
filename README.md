@@ -24,7 +24,7 @@ Clone down this repo and then
 
 and you should see the following output
 
-[0 0]
+    [0 0]
     [0 0 1 0 2]
     [0 0 0 1 3 1 4 5 0 8]
     [0 0 0 0]
