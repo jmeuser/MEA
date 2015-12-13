@@ -16,6 +16,7 @@ Expense is allocated as follows:
 The monthly expense allocation warranted a manager and their employees is equal to the amount warranted the manager plus the amount warranted by their employees. Thus, a manager having an employee who is a manager of a developer and a QA tester is warranted $300 + $300 + $1000 + $500 yielding $2100.
 
 A department is a forest of employee trees, and, as such, warrants a monthly expense allocation equal to the sum of the monthly expense allocated to each of its employee trees.
+
 ----
 Right now main.go generates the random Employee trees that will be used to write the cost_test.go test suite.
 Clone down this repo and then
