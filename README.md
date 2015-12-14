@@ -69,6 +69,7 @@ and you should see the following output
 * func ret in main.go should return
 
     []*Employee
+
 * Introduce func saveBPF (Basic Personnel Files) to main.go (saves marhsaled []*Employee to fileName.json).
 * Transform main.go into cost_test.go
 * Introduce how-to run cost_test.go to README.md
