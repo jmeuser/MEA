@@ -20,7 +20,7 @@ func (e *Employee) mea() (int, error) {
 	case "Manager":
 		return 300, nil
 	default:
-		return -1, fmt.Errorf("The MEA for the position %v his unspecified.", e.Pos)
+		return -1, fmt.Errorf("The MEA for the position %v is unspecified.", e.Pos)
 	}
 }
 
