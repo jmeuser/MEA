@@ -22,7 +22,6 @@ type Employee struct{ ID, MID, Pos, Dep string }
 func ret(n int, dep string) map[string]*Employee {
 	M := make(map[string]*Employee)
 	A := riba(n)
-	fmt.Println(A)
 	for i := n - 1; 0 < i; i-- {
 		iid := strconv.Itoa(i)
 		if M[iid] == nil {
