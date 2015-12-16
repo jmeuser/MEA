@@ -61,4 +61,6 @@ func main() {
 	fmt.Println("y[\"Hello\"] is", y["Hello"])
 	fmt.Println("Is y[\"Hello\"] nil?", y["Hello"] == nil)
 	fmt.Println(make(map[string][]string))
+	y["Test"] = []string{"0", "1"}
+	fmt.Println(len(y))
 }

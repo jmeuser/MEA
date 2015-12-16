@@ -5,6 +5,8 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
+	"io/ioutil"
+	"encoding/json"
 )
 
 // riba gives a Random Index Bounded Array of length n.
@@ -38,6 +40,24 @@ func ret(n int, dep string) map[string]*Employee {
 	M["0"] = &Employee{"0", "0", "Manager", dep}
 	return M
 }
+
+func makeRBPF(n int, fileName string) error {
+	M := ret(n, "a")
+	employees := make([]*Employee, 0, len(M))
+	for _, e := range M {
+		employees = append(employees, e)
+	}
+	data, err := json.Marshal(employees)
+	if err != nil {
+		return fmt.Errorf("Marhsal fail: %v", err)
+	}
+	err = ioutil.WriteFile(fileName + ".json", data, 0600)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < 5; i++ {
@@ -50,4 +70,5 @@ func main() {
 			fmt.Println(*M[strconv.Itoa(i)])
 		}
 	}
+	makeRBPF(10, "testRBPF")
 }
