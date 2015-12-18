@@ -20,25 +20,37 @@ func riba(n int) []int {
 
 type Employee struct{ ID, MID, Pos, Dep string }
 
-// ret gives a Random Employee Tree of order n in dep(artment) as a map[string]*Employee.
-func ret(n int, dep string) map[string]*Employee {
+// randomEmployeeTree gives []*Employee with length order and IDS from firstNewIID to firstNewID + order in departmetn dep.
+func randomEmployeeTree(order int, firstNewID, dep string) ([]*Employee, error) {
+	if order < 1 {
+		return nil, fmt.Errorf("The order of an Employee Tree must be greater than or equal to one: order = %v", order)
+	}
+	N, err := strconv.Atoi(firstNewID)
+	if err != nil {
+		return nil, err
+	}
+	A := riba(order)
 	M := make(map[string]*Employee)
-	A := riba(n)
-	for i := n - 1; 0 < i; i-- {
-		iid := strconv.Itoa(i)
+	for i := order - 1; 0 < i; i-- {
+		iid := strconv.Itoa(i + N)
 		if M[iid] == nil {
-			imid := strconv.Itoa(A[i])
+			imid := strconv.Itoa(A[i] + N)
 			ipos := []string{"Developer", "QA Tester"}[rand.Intn(2)]
-			M[iid] = &Employee{iid, imid, ipos, dep}
-			for j := A[i]; (0 < j) && M[strconv.Itoa(j)] == nil; j = A[j] {
-				jid := strconv.Itoa(j)
-				jmid := strconv.Itoa(A[j])
-				M[jid] = &Employee{jid, jmid, "Manager", dep}
+			M[iid] = &Employee{iid,imid,ipos,dep}
+			for j := A[i] ; (0 < j) && M[strconv.Itoa(j+N)] == nil; j=A[j] {
+				jid := strconv.Itoa(j+N)
+				jmid:= strconv.Itoa(A[j]+N)
+				M[jid] = &Employee{jid,jmid,"Manager",dep}
 			}
 		}
 	}
-	M["0"] = &Employee{"0", "0", "Manager", dep}
-	return M
+	// Assumes the root of every employee tree in a department is a manager: refactor to deal with order == 1.
+	M[firstNewID] = &Employee{firstNewID, firstNewID, "Manager", dep}
+	E := make([]*Employee, 0, order)
+	for _, e := range M {
+		E = append(E, e)
+	}
+	return E, nil
 }
 
 func makeRBPF(n int, fileName string) error {
